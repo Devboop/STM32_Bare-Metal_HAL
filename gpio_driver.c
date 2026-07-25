@@ -137,3 +137,13 @@ void toggle_pin_with_delay(GPIO_t *gpio_port, uint8_t pin, uint32_t delay){
         for(uint32_t i = 0; i < delay; i++); // Delay
     }
 }
+
+//single timed blink function//
+void timed_blink(GPIO_t *gpio_port, uint8_t pin, uint32_t delay) {
+    if (gpio_port->ODR & (1 << pin)){
+        bit_set_reset(gpio_port, pin, RESET); 
+        for (uint32_t i = 0; i < delay; i++); //Fixed Delay
+        bit_set_reset(gpio_port, pin, SET);
+    }
+}    
+

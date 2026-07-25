@@ -1,7 +1,25 @@
 #ifndef GPIO_DRIVER_H
 #define GPIO_DRIVER_H
+
 #include <stdint.h>
 
+// GPIO base addresses for STM32F4 series microcontrollers //
+#define GPIOA volatile (GPIO_t *)0x40020000
+#define GPIOB volatile (GPIO_t *)0x40020400
+#define GPIOC volatile (GPIO_t *)0x40020800
+#define GPIOD volatile (GPIO_t *)0x40020C00
+#define GPIOE volatile (GPIO_t *)0x40021000
+#define GPIOF volatile (GPIO_t *)0x40021400
+#define GPIOG volatile (GPIO_t *)0x40021800
+#define GPIOH volatile (GPIO_t *)0x40021C00
+
+// Bit manipulation macros //
+#define SET_BIT(gpio_reg, bit) (gpio_reg |= (1 << bit))
+#define CLEAR_BIT(gpio_reg, bit) (gpio_reg &= ~(1 << bit))
+#define READ_BIT(gpio_reg, bit) ((gpio_reg >> bit) & 0x01)
+#define TOGGLE_BIT(gpio_reg, bit) (gpio_reg ^= (1 << bit))
+
+// GPIO register structure definition //
 typedef struct{
 volatile uint32_t MODER;
 volatile uint32_t OTYPER;
@@ -15,20 +33,7 @@ volatile uint32_t AFRL;
 volatile uint32_t AFRH;
 } GPIO_t;
 
-#define GPIOA volatile (GPIO_t *)0x40020000
-#define GPIOB volatile (GPIO_t *)0x40020400
-#define GPIOC volatile (GPIO_t *)0x40020800
-#define GPIOD volatile (GPIO_t *)0x40020C00
-#define GPIOE volatile (GPIO_t *)0x40021000
-#define GPIOF volatile (GPIO_t *)0x40021400
-#define GPIOG volatile (GPIO_t *)0x40021800
-#define GPIOH volatile (GPIO_t *)0x40021C00
-
-#define SET_BIT(gpio_reg, bit) (gpio_reg |= (1 << bit))
-#define CLEAR_BIT(gpio_reg, bit) (gpio_reg &= ~(1 << bit))
-#define READ_BIT(gpio_reg, bit) ((gpio_reg >> bit) & 0x01)
-#define TOGGLE_BIT(gpio_reg, bit) (gpio_reg ^= (1 << bit))
-
+// GPIO pin mode enumeration definition //
 typedef enum{
     INPUT = 0x00,
     OUTPUT = 0x01,
@@ -84,12 +89,28 @@ typedef enum{
     SET
 } GPIO_pin_set_reset;
 
+// Set GPIO pin mode function definition //
 void set_pin_mode(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode mode);
+
+// Set GPIO pin output type function definition //
 void set_pin_output_type(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_output_type output_type);
+
+// Set GPIO pin speed function definition //
 void set_pin_speed(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_speed speed);
+
+// Set GPIO pin pull-up/pull-down function definition //
 void set_pin_pull(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_pull pull);
+
+// Set GPIO pin alternate function function definition //
 void set_pin_alternate_function(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alternate_function af);
+
+// Bit set/reset function definition //
 void bit_set_reset(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset set_reset);
+
+// Toggle GPIO pin with delay function definition //
 void toggle_pin_with_delay(GPIO_t *gpio_port, uint8_t pin, uint32_t delay);
+
+// Timed blink function definition //
+void timed_blink(GPIO_t *gpio_port, uint8_t pin, uint32_t delay);
 
 #endif // GPIO_DRIVER_H
