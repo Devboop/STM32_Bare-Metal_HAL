@@ -3,19 +3,23 @@
 
 #include <stdint.h>
 
+// RCC base address for clock control //
+#define RCC (*(volatile uint32_t *)0x40023800UL)
+
 // GPIO base addresses for STM32F4 series microcontrollers //
-#define GPIOA ((GPIO_t *)0x40020000)
-#define GPIOB ((GPIO_t *)0x40020400)
-#define GPIOC ((GPIO_t *)0x40020800)
-#define GPIOD ((GPIO_t *)0x40020C00)
-#define GPIOE ((GPIO_t *)0x40021000)
-#define GPIOF ((GPIO_t *)0x40021400)
-#define GPIOG ((GPIO_t *)0x40021800)
-#define GPIOH ((GPIO_t *)0x40021C00)
+#define GPIOA ((GPIO_t *)0x40020000UL)
+#define GPIOB ((GPIO_t *)0x40020400UL)
+#define GPIOC ((GPIO_t *)0x40020800UL)
+#define GPIOD ((GPIO_t *)0x40020C00UL)
+#define GPIOE ((GPIO_t *)0x40021000UL)
+#define GPIOF ((GPIO_t *)0x40021400UL)
+#define GPIOG ((GPIO_t *)0x40021800UL)
+#define GPIOH ((GPIO_t *)0x40021C00UL)
+
 
 // Bit manipulation macros //
-#define SET_BIT(gpio_reg, bit) ((gpio_reg) |= (1 << (bit)))
-#define CLEAR_BIT(gpio_reg, bit) ((gpio_reg) &= ~(1 << (bit)))
+#define SET_BIT(gpio_reg, bit) ((gpio_reg) |= (1UL << (bit)))
+#define CLEAR_BIT(gpio_reg, bit) ((gpio_reg) &= ~(1UL << (bit)))
 #define READ_BIT(gpio_reg, bit) (((gpio_reg) >> (bit)) & 0x01)
 #define TOGGLE_BIT(gpio_reg, bit) ((gpio_reg) ^= (1 << (bit)))
 
@@ -33,27 +37,12 @@ volatile uint32_t AFRL;
 volatile uint32_t AFRH;
 } GPIO_t;
 
-// GPIO Config Structure definition //
-typedef struct{
-    uint16_t pin_mask; // Pin mask for the GPIO pins to be configured
-    GPIO_pin_mode_t mode; // Mode for the GPIO pins (input, output, alternate function, analog)
-    GPIO_pin_output_type_t output_type; // Output type for the GPIO pins (push-pull, open-drain)
-    GPIO_pin_speed_t speed; // Speed for the GPIO pins (low, medium, high, very high)
-    GPIO_pin_pull_t pull; // Pull-up/pull-down configuration for the GPIO pins (no pull, pull-up, pull-down)   
-    GPIO_pin_alternate_function_t alternate_function; // Alternate function for the GPIO pins (AF0 to AF15)
-    GPIO_pin_set_reset_t set_reset; // Set/reset configuration for the GPIO pins (set, reset)
-} GPIO_config_t;
-
 // GPIO Status enumeration definition //
 typedef enum{
     GPIO_SUCCESS = 0,
     GPIO_ERROR_INVALID_PIN = 1,
     GPIO_ERROR_INVALID_MODE = 2,
-    GPIO_ERROR_INVALID_OUTPUT_TYPE = 3,
-    GPIO_ERROR_INVALID_SPEED = 4,
-    GPIO_ERROR_INVALID_PULL = 5,
-    GPIO_ERROR_INVALID_ALTERNATE_FUNCTION = 6,
-    GPIO_ERROR_INVALID_SET_RESET = 7
+    GPIO_ERROR_INVALID_OUTPUT_TYPE = 3
 } GPIO_status_t;
 
 // GPIO pin mode enumeration definition //
@@ -111,23 +100,34 @@ typedef enum{
     SET
 } GPIO_pin_set_reset_t;
 
+// GPIO Config Structure definition //
+typedef struct{
+    uint16_t pin_mask; // Pin mask for the GPIO pins to be configured
+    GPIO_pin_mode_t mode; // Mode for the GPIO pins (input, output, alternate function, analog)
+    GPIO_pin_output_type_t output_type; // Output type for the GPIO pins (push-pull, open-drain)
+    GPIO_pin_speed_t speed; // Speed for the GPIO pins (low, medium, high, very high)
+    GPIO_pin_pull_t pull; // Pull-up/pull-down configuration for the GPIO pins (no pull, pull-up, pull-down)   
+    GPIO_pin_alternate_function_t alternate_function; // Alternate function for the GPIO pins (AF0 to AF15)
+    GPIO_pin_set_reset_t set_reset; // Set/reset configuration for the GPIO pins (set, reset)
+} GPIO_config_t;
+
 // Set GPIO pin mode function definition //
-void set_pin_mode(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode_t mode);
+void set_pin_mode(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode_t mode);
 
 // Set GPIO pin output type function definition //
-void set_pin_output_type(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_output_type_t output_type);
+void set_pin_output_type(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_output_type_t output_type);
 
 // Set GPIO pin speed function definition //
-void set_pin_speed(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_speed_t speed);
+void set_pin_speed(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_speed_t speed);
 
 // Set GPIO pin pull-up/pull-down function definition //
-void set_pin_pull(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_pull_t pull);
+void set_pin_pull(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_pull_t pull);
 
 // Set GPIO pin alternate function function definition //
-void set_pin_alternate_function(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alternate_function_t af);
+void set_pin_alternate_function(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alternate_function_t af);
 
 // Bit set/reset function definition //
-void bit_set_reset(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset_t set_reset);
+void bit_set_reset(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset_t set_reset);
 
 // Toggle GPIO pin with delay function definition //
 void toggle_pin_with_delay(GPIO_t *gpio_port, uint8_t pin, uint32_t delay);
