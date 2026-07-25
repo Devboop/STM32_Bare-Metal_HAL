@@ -4,20 +4,20 @@
 #include <stdint.h>
 
 // GPIO base addresses for STM32F4 series microcontrollers //
-#define GPIOA volatile (GPIO_t *)0x40020000
-#define GPIOB volatile (GPIO_t *)0x40020400
-#define GPIOC volatile (GPIO_t *)0x40020800
-#define GPIOD volatile (GPIO_t *)0x40020C00
-#define GPIOE volatile (GPIO_t *)0x40021000
-#define GPIOF volatile (GPIO_t *)0x40021400
-#define GPIOG volatile (GPIO_t *)0x40021800
-#define GPIOH volatile (GPIO_t *)0x40021C00
+#define GPIOA ((GPIO_t *)0x40020000)
+#define GPIOB ((GPIO_t *)0x40020400)
+#define GPIOC ((GPIO_t *)0x40020800)
+#define GPIOD ((GPIO_t *)0x40020C00)
+#define GPIOE ((GPIO_t *)0x40021000)
+#define GPIOF ((GPIO_t *)0x40021400)
+#define GPIOG ((GPIO_t *)0x40021800)
+#define GPIOH ((GPIO_t *)0x40021C00)
 
 // Bit manipulation macros //
-#define SET_BIT(gpio_reg, bit) (gpio_reg |= (1 << bit))
-#define CLEAR_BIT(gpio_reg, bit) (gpio_reg &= ~(1 << bit))
-#define READ_BIT(gpio_reg, bit) ((gpio_reg >> bit) & 0x01)
-#define TOGGLE_BIT(gpio_reg, bit) (gpio_reg ^= (1 << bit))
+#define SET_BIT(gpio_reg, bit) ((gpio_reg) |= (1 << (bit)))
+#define CLEAR_BIT(gpio_reg, bit) ((gpio_reg) &= ~(1 << (bit)))
+#define READ_BIT(gpio_reg, bit) (((gpio_reg) >> (bit)) & 0x01)
+#define TOGGLE_BIT(gpio_reg, bit) ((gpio_reg) ^= (1 << (bit)))
 
 // GPIO register structure definition //
 typedef struct{
@@ -59,8 +59,7 @@ typedef enum{
 typedef enum{
     NO_PULL = 0x00,
     PULL_UP = 0x01,
-    PULL_DOWN = 0x02,
-    RESERVED = 0x03
+    PULL_DOWN = 0x02
 } GPIO_pin_pull;
 
 // GPIO pin alternate function enumeration definition //
