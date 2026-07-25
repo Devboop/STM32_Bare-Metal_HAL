@@ -33,19 +33,42 @@ volatile uint32_t AFRL;
 volatile uint32_t AFRH;
 } GPIO_t;
 
+// GPIO Config Structure definition //
+typedef struct{
+    uint16_t pin_mask; // Pin mask for the GPIO pins to be configured
+    GPIO_pin_mode_t mode; // Mode for the GPIO pins (input, output, alternate function, analog)
+    GPIO_pin_output_type_t output_type; // Output type for the GPIO pins (push-pull, open-drain)
+    GPIO_pin_speed_t speed; // Speed for the GPIO pins (low, medium, high, very high)
+    GPIO_pin_pull_t pull; // Pull-up/pull-down configuration for the GPIO pins (no pull, pull-up, pull-down)   
+    GPIO_pin_alternate_function_t alternate_function; // Alternate function for the GPIO pins (AF0 to AF15)
+    GPIO_pin_set_reset_t set_reset; // Set/reset configuration for the GPIO pins (set, reset)
+} GPIO_config_t;
+
+// GPIO Status enumeration definition //
+typedef enum{
+    GPIO_SUCCESS = 0,
+    GPIO_ERROR_INVALID_PIN = 1,
+    GPIO_ERROR_INVALID_MODE = 2,
+    GPIO_ERROR_INVALID_OUTPUT_TYPE = 3,
+    GPIO_ERROR_INVALID_SPEED = 4,
+    GPIO_ERROR_INVALID_PULL = 5,
+    GPIO_ERROR_INVALID_ALTERNATE_FUNCTION = 6,
+    GPIO_ERROR_INVALID_SET_RESET = 7
+} GPIO_status_t;
+
 // GPIO pin mode enumeration definition //
 typedef enum{
     INPUT = 0x00,
     OUTPUT = 0x01,
     ALTERNATE = 0x02,
     ANALOG = 0x03
-} GPIO_pin_mode;
+} GPIO_pin_mode_t;
 
 // GPIO pin output type enumeration definition //
 typedef enum{
     PUSH_PULL = 0x00,
     OPEN_DRAIN = 0x01
-} GPIO_pin_output_type;
+} GPIO_pin_output_type_t;
 
 // GPIO pin speed enumeration definition //
 typedef enum{
@@ -53,14 +76,14 @@ typedef enum{
     MEDIUM = 0x01,
     HIGH = 0x02,
     VERY_HIGH = 0x03
-} GPIO_pin_speed;
+} GPIO_pin_speed_t;
 
 // GPIO pin pull-up/pull-down enumeration definition //
 typedef enum{
     NO_PULL = 0x00,
     PULL_UP = 0x01,
     PULL_DOWN = 0x02
-} GPIO_pin_pull;
+} GPIO_pin_pull_t;
 
 // GPIO pin alternate function enumeration definition //
 typedef enum{
@@ -80,31 +103,31 @@ typedef enum{
     AF13 = 0x0D,
     AF14 = 0x0E,
     AF15 = 0x0F
-} GPIO_pin_alternate_function;
+} GPIO_pin_alternate_function_t;
 
 // GPIO pin set/reset enumeration definition //
 typedef enum{
     RESET,
     SET
-} GPIO_pin_set_reset;
+} GPIO_pin_set_reset_t;
 
 // Set GPIO pin mode function definition //
-void set_pin_mode(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode mode);
+void set_pin_mode(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode_t mode);
 
 // Set GPIO pin output type function definition //
-void set_pin_output_type(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_output_type output_type);
+void set_pin_output_type(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_output_type_t output_type);
 
 // Set GPIO pin speed function definition //
-void set_pin_speed(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_speed speed);
+void set_pin_speed(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_speed_t speed);
 
 // Set GPIO pin pull-up/pull-down function definition //
-void set_pin_pull(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_pull pull);
+void set_pin_pull(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_pull_t pull);
 
 // Set GPIO pin alternate function function definition //
-void set_pin_alternate_function(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alternate_function af);
+void set_pin_alternate_function(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alternate_function_t af);
 
 // Bit set/reset function definition //
-void bit_set_reset(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset set_reset);
+void bit_set_reset(volatile GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset_t set_reset);
 
 // Toggle GPIO pin with delay function definition //
 void toggle_pin_with_delay(GPIO_t *gpio_port, uint8_t pin, uint32_t delay);
