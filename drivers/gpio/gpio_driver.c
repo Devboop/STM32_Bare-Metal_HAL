@@ -2,7 +2,6 @@
 #include <stddef.h>
 #include "gpio_driver.h" 
 
-//Set GPIO pin mode function definition //
 void set_pin_mode(uint32_t gpio_reg, uint8_t pin, GPIO_pin_mode_t mode){
     gpio_reg &= ~(0x03 << (pin * 2)); // Clear the mode bits for the specified pin
     gpio_reg |= (mode << (pin * 2)); // Set the new mode for the specified pin
