@@ -155,39 +155,39 @@ typedef struct{
 
 /**
  * @brief GPIO pin mode function definition
- * @param gpio_reg The GPIO register to modify
+ * @param gpio_port The GPIO port to modify
  * @param pin The pin number (0-15) to configure
  * @param mode The mode to set for the specified pin (input, output, alternate function, analog)
  * @return void
  */
-void set_pin_mode(uint32_t gpio_reg, uint8_t pin, GPIO_pin_mode_t mode);
+void set_pin_mode(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode_t mode);
 
 /**
  * @brief GPIO pin output type function definition
- * @param gpio_reg The GPIO register to modify
+ * @param gpio_port The GPIO port to modify
  * @param pin The pin number (0-15) to configure
  * @param output_type The output type to set for the specified pin (push-pull, open-drain)
  * @return void
  */
-void set_pin_output_type(uint32_t gpio_reg, uint8_t pin, GPIO_pin_output_type_t output_type);
+void set_pin_output_type(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_output_type_t output_type);
 
 /**
  * @brief GPIO pin speed function definition
- * @param gpio_reg The GPIO register to modify
+ * @param gpio_port The GPIO port to modify
  * @param pin The pin number (0-15) to configure
  * @param speed The speed to set for the specified pin (low, medium, high, very high)
  * @return void
  */
-void set_pin_speed(uint32_t gpio_reg, uint8_t pin, GPIO_pin_speed_t speed);
+void set_pin_speed(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_speed_t speed);
 
 /**
  * @brief GPIO pin pull-up/pull-down function definition
- * @param gpio_reg The GPIO register to modify
+ * @param gpio_port The GPIO port to modify
  * @param pin The pin number (0-15) to configure
  * @param pull The pull-up/pull-down configuration to set for the specified pin (no pull, pull-up, pull-down)
  * @return void
  */
-void set_pin_pull(uint32_t gpio_reg, uint8_t pin, GPIO_pin_pull_t pull);
+void set_pin_pull(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_pull_t pull);
 
 /**
  * @brief GPIO pin alternate function function definition
@@ -200,12 +200,12 @@ void set_pin_alternate_function(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alterna
 
 /**
  * @brief Bit set/reset function definition
- * @param gpio_reg The GPIO register to modify
+ * @param gpio_port The GPIO port to modify
  * @param pin The pin number (0-15) to configure
  * @param set_reset The set/reset configuration to apply for the specified pin (set, reset)
  * @return void
  */
-void set_pin_state(uint32_t gpio_reg, uint8_t pin, GPIO_pin_set_reset_t set_reset);
+void set_pin_state(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset_t set_reset);
 
 /**
  * @brief Clock control function definition
