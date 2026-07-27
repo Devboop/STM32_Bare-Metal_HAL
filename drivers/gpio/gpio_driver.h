@@ -100,6 +100,12 @@ typedef enum{
     SET
 } GPIO_pin_set_reset_t;
 
+// Clock enum//
+typedef enum {
+    OFF = 0x0,
+    ON = 0x1
+} clock_status_t;
+
 // GPIO Config Structure definition //
 typedef struct{
     uint16_t pin_mask; // Pin mask for the GPIO pins to be configured
@@ -108,31 +114,30 @@ typedef struct{
     GPIO_pin_speed_t speed; // Speed for the GPIO pins (low, medium, high, very high)
     GPIO_pin_pull_t pull; // Pull-up/pull-down configuration for the GPIO pins (no pull, pull-up, pull-down)   
     GPIO_pin_alternate_function_t alternate_function; // Alternate function for the GPIO pins (AF0 to AF15)
-    GPIO_pin_set_reset_t set_reset; // Set/reset configuration for the GPIO pins (set, reset)
+    GPIO_pin_set_reset_t pin_state; // Set/reset configuration for the GPIO pins (set, reset)
 } GPIO_config_t;
 
 // Set GPIO pin mode function definition //
-void set_pin_mode(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode_t mode);
+void set_pin_mode(uint32_t gpio_reg, uint8_t pin, GPIO_pin_mode_t mode);
 
 // Set GPIO pin output type function definition //
-void set_pin_output_type(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_output_type_t output_type);
+void set_pin_output_type(uint32_t gpio_reg, uint8_t pin, GPIO_pin_output_type_t output_type);
 
 // Set GPIO pin speed function definition //
-void set_pin_speed(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_speed_t speed);
+void set_pin_speed(uint32_t gpio_reg, uint8_t pin, GPIO_pin_speed_t speed);
 
 // Set GPIO pin pull-up/pull-down function definition //
-void set_pin_pull(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_pull_t pull);
+void set_pin_pull(uint32_t gpio_reg, uint8_t pin, GPIO_pin_pull_t pull);
 
 // Set GPIO pin alternate function function definition //
 void set_pin_alternate_function(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alternate_function_t af);
 
 // Bit set/reset function definition //
-void bit_set_reset(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset_t set_reset);
+void set_pin_state(uint32_t gpio_reg, uint8_t pin, GPIO_pin_set_reset_t set_reset);
 
-// Toggle GPIO pin with delay function definition //
-void toggle_pin_with_delay(GPIO_t *gpio_port, uint8_t pin, uint32_t delay);
+void clock_init();
 
-// Timed blink function definition //
-void timed_blink(GPIO_t *gpio_port, uint8_t pin, uint32_t delay);
+//GPIO initialization function definition //
+GPIO_status_t gpio_init(GPIO_t *gpio_port, const GPIO_config_t *config);
 
 #endif // GPIO_DRIVER_H
