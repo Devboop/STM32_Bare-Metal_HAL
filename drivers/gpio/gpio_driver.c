@@ -75,12 +75,12 @@ GPIO_status_t gpio_init(GPIO_t *gpio_port, const GPIO_config_t *config){
         //Pin mask check to speed up loop//
         if((config->pin_mask & (1U << pin)) == 0U) {continue;}
         //otherwise  init pin//
-        set_pin_mode(gpio_port, pin, config->mode);
         set_pin_output_type(gpio_port, pin, config->output_type);
         set_pin_speed(gpio_port, pin, config->speed);
         set_pin_pull(gpio_port, pin, config->pull);
         set_pin_alternate_function(gpio_port, pin, config->alternate_function);
         set_pin_state(gpio_port, pin, config->pin_state);
+        set_pin_mode(gpio_port, pin, config->mode);
     }
 
     return(GPIO_SUCCESS);
