@@ -1,3 +1,13 @@
+/**
+ * @file gpio_driver.h 
+ * @author Dominick Green (greendom99@gmail.com)
+ * @brief GPIO Driver for STM32F4xx series microcontrollers
+ * @version 0.1
+ * @date 2026-07-26
+ * 
+ * @copyright Copyright (c) 2026
+ * 
+ */
 #ifndef GPIO_DRIVER_H
 #define GPIO_DRIVER_H
 
