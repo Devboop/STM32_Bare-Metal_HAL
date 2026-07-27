@@ -6,3 +6,6 @@ build/
 *.map
 *.d
 .vscode/
+html/
+latex/
+Doxyfile
