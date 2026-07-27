@@ -1,7 +1,7 @@
 /**
  * @file gpio_driver.c
- * @author your name (you@domain.com)
- * @brief 
+ * @author Dominick Green (greendom99@gmail.com)
+ * @brief GPIO driver implementation for STM32 microcontrollers.
  * @version 0.1
  * @date 2026-07-26
  * 
