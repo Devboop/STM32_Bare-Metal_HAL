@@ -50,20 +50,6 @@ void set_pin_state(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset_t set_rese
     }
 }
 
-void set_clock_state(clock_status_t clock_state){
-    //to do//
-    switch(clock_state){
-        case ON:
-            (RCC) |= (1U); 
-            break;
-        case OFF: 
-            (RCC) &= ~(1U);
-            break;
-        default:
-            (RCC) &= ~(1U);        
-    }
-}
-
 GPIO_status_t gpio_init(GPIO_t *gpio_port, const GPIO_config_t *config){
 
     //Error checking//

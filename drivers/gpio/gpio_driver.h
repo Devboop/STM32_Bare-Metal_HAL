@@ -208,13 +208,6 @@ void set_pin_alternate_function(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_alterna
 void set_pin_state(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_set_reset_t set_reset);
 
 /**
- * @brief Clock control function definition
- * @param clock_state The clock state to set (ON, OFF)
- * @return void
- */
-void set_clock_state(clock_status_t clock_state);
-
-/**
  * @brief GPIO initialization function definition
  * @param gpio_port The GPIO port to initialize
  * @param config The configuration structure containing the settings for the GPIO pins
