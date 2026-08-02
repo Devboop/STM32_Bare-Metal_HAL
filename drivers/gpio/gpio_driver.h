@@ -133,14 +133,6 @@ typedef enum{
 } GPIO_pin_set_reset_t;
 
 /**
- * @brief Clock status enumeration
- */
-typedef enum {
-    OFF = 0x0,
-    ON = 0x1
-} clock_status_t;
-
-/**
  * @brief GPIO configuration structure definition
  */
 typedef struct{

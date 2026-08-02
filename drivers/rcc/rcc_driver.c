@@ -1,17 +1,17 @@
 #include "rcc_driver.h"
 
 // AHB1 GPIO Clock Enable Function //
-void gpio_clock_enable(ahb1_clock_port_t port, rcc_status_t clock_status){
+void rcc_ahb1_clock_enable(ahb1_clock_port_t port, rcc_status_t clock_status){
     switch (clock_status) {
-        case ON: 
-            RCC->RCC_AHB1ENR |= ((1UL) << (port));
+        case RCC_CLK_ON: 
+            RCC->AHB1ENR |= ((1UL) << (port));
             break;
 
-        case OFF: 
-            RCC->RCC_AHB1ENR &= ~((1UL) << (port));
+        case RCC_CLK_OFF: 
+            RCC->AHB1ENR &= ~((1UL) << (port));
             break;
 
         default: 
-            RCC->RCC_AHB1ENR &= ~((1UL) << (port));
+            RCC->AHB1ENR &= ~((1UL) << (port));
     }
 }
