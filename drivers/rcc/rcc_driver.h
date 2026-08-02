@@ -1,11 +1,23 @@
+/**
+ * @file rcc_driver.h
+ * @author Dominick Green
+ * @brief RCC driver header file
+ * @version 0.1
+ * @date 2024-06-05
+ */
 #pragma once 
 
 #include <stdint.h>
+#include <stddef.h>
 
-// Pointer to RCC port struct in memory //
+/**
+ * @brief RCC base address for clock control
+ */
 #define RCC ((RCC_t *)0x40023800UL)
 
-// RCC Structure //
+/**
+ * @brief RCC register structure definition
+ */
 typedef struct{
     volatile uint32_t CR;
     volatile uint32_t PLL_CFGR;
@@ -43,14 +55,29 @@ typedef struct{
     volatile uint32_t DCKCFGR2;
 } RCC_t;
 
+/**
+ * @brief Static assertions to ensure correct offsets of RCC registers
+ */
+_Static_assert(offsetof(RCC_t, APB1RSTR)  == 0x20, "");
+_Static_assert(offsetof(RCC_t, AHB1ENR)   == 0x30, "");
+_Static_assert(offsetof(RCC_t, APB1ENR)   == 0x40, "");
+_Static_assert(offsetof(RCC_t, AHB1LPENR) == 0x50, "");
+_Static_assert(offsetof(RCC_t, APB1LPENR) == 0x60, "");
+_Static_assert(offsetof(RCC_t, BDCR)      == 0x70, "");
+_Static_assert(offsetof(RCC_t, SSCGR)     == 0x80, "");
+_Static_assert(sizeof(RCC_t)              == 0x98, "");
 
-// Clock status enum //
+/**
+ * @brief RCC clock status enumeration
+ */
 typedef enum {
     RCC_CLK_OFF = 0x0,
     RCC_CLK_ON = 0x1
 } rcc_status_t;
 
-// AHB1 Clock port enum //
+/**
+ * @brief AHB1 clock port enumeration
+ */
 typedef enum {
     RCC_AHB1_GPIOA = 0UL,
     RCC_AHB1_GPIOB = 1UL,
@@ -69,5 +96,9 @@ typedef enum {
 } ahb1_clock_port_t;
 
 
-// AHB1 GPIO Clock Enable Function //
+/**
+ * @brief AHB1 GPIO Clock Enable Function
+ * @param port AHB1 clock port
+ * @param clock_status Clock status
+ */
 void rcc_ahb1_clock_enable(ahb1_clock_port_t port, rcc_status_t clock_status);
