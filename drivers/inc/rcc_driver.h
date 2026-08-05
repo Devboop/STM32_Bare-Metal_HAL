@@ -5,7 +5,9 @@
  * @version 0.1
  * @date 2024-06-05
  */
-#pragma once 
+
+#ifndef RCC_DRIVER_H
+#define RCC_DRIVER_H 
 
 #include <stdint.h>
 #include <stddef.h>
@@ -102,3 +104,5 @@ typedef enum {
  * @param clock_status Clock status
  */
 void rcc_ahb1_clock_enable(ahb1_clock_port_t port, rcc_status_t clock_status);
+
+#endif /* RCC_DRIVER_H */
