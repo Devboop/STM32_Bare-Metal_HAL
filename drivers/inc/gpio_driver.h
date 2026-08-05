@@ -15,11 +15,6 @@
 #include <stdint.h>
 
 /**
- * @brief RCC base address for clock control
- */
-#define RCC (*(volatile uint32_t *)0x40023800UL)
-
-/**
  * @brief GPIO port base addresses
  */
 #define GPIOA ((GPIO_t *)0x40020000UL)
