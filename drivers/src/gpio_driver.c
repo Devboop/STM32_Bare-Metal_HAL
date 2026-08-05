@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2026
  * 
  */
+
 #include <stdint.h>
 #include <stddef.h>
 #include "gpio_driver.h" 
