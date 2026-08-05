@@ -1,4 +1,9 @@
-#include "rcc_driver.h"
+/** @file rcc_driver.c
+ *  @brief RCC driver implementation
+ *  @author Dominick Green 
+ */
+
+#include "../inc/rcc_driver.h"
 
 // AHB1 GPIO Clock Enable Function //
 void rcc_ahb1_clock_enable(ahb1_clock_port_t port, rcc_status_t clock_status){

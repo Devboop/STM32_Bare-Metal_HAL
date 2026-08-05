@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include "gpio_driver.h" 
+#include "../inc/gpio_driver.h" 
 
 void set_pin_mode(GPIO_t *gpio_port, uint8_t pin, GPIO_pin_mode_t mode){
     gpio_port->MODER &= ~(0x03 << (pin * 2)); // Clear the mode bits for the specified pin
