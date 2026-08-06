@@ -31,42 +31,33 @@ add_library(stm32_hal STATIC
 )
 target_include_directories(stm32_hal PUBLIC drivers/inc)
 
-# ---------------------------------------------------------------------------
-# blink example
-# ---------------------------------------------------------------------------
-add_executable(blink
-    examples/blink/main.c
-    startup/system_stm32f446.c       # SystemInit + __libc_init_array stubs
-    ${STARTUP_ASM}
-)
+function(add_example name)
+    add_executable(${name}
+        examples/${name}/main.c
+        startup/system_stm32f446.c
+        ${STARTUP_ASM}
+    )
+    target_link_libraries(${name} PRIVATE stm32_hal)
+    target_link_options(${name} PRIVATE
+        -T${LINKER_SCRIPT}
+        -Wl,-Map=${CMAKE_BINARY_DIR}/${name}.map,--cref
+        -Wl,--print-memory-usage
+    )
+    set_target_properties(${name} PROPERTIES
+        SUFFIX ".elf"
+        LINK_DEPENDS ${LINKER_SCRIPT}
+    )
+    add_custom_command(TARGET ${name} POST_BUILD
+        COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${name}> ${name}.bin
+        COMMAND ${CMAKE_OBJCOPY} -O ihex   $<TARGET_FILE:${name}> ${name}.hex
+        COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${name}>
+    )
+    add_custom_target(flash_${name}
+        COMMAND openocd -f board/st_nucleo_f4.cfg
+                -c "program $<TARGET_FILE:${name}> verify reset exit"
+        USES_TERMINAL
+    )
+    add_dependencies(flash_${name} ${name})
+endfunction()
 
-target_link_libraries(blink PRIVATE stm32_hal)
-
-target_link_options(blink PRIVATE
-    -T${LINKER_SCRIPT}
-    -Wl,-Map=${CMAKE_BINARY_DIR}/blink.map,--cref
-    -Wl,--print-memory-usage
-)
-
-set_target_properties(blink PROPERTIES
-    SUFFIX ".elf"
-    LINK_DEPENDS ${LINKER_SCRIPT}    # relink when the script changes
-)
-
-add_custom_command(TARGET blink POST_BUILD
-    COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:blink> blink.bin
-    COMMAND ${CMAKE_OBJCOPY} -O ihex   $<TARGET_FILE:blink> blink.hex
-    COMMAND ${CMAKE_SIZE} $<TARGET_FILE:blink>
-    COMMENT "Generating blink.bin / blink.hex"
-)
-
-# ---------------------------------------------------------------------------
-# Convenience: cmake --build build --target flash
-# ---------------------------------------------------------------------------
-add_custom_target(flash
-    COMMAND openocd -f board/st_nucleo_f4.cfg
-            -c "program $<TARGET_FILE:blink> verify reset exit"
-    USES_TERMINAL
-    COMMENT "Flashing via ST-LINK"
-)
-add_dependencies(flash blink)
+add_example(blink)
