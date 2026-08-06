@@ -19,17 +19,17 @@ add_compile_options(
 # Paths — check these against your actual filenames. CubeMX names things like
 # STM32F446RETX_FLASH.ld and startup_stm32f446retx.s
 # ---------------------------------------------------------------------------
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/stm32f446re.ld)
-set(STARTUP_ASM   ${CMAKE_SOURCE_DIR}/startup/startup_stm32f446.s)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/linker/stm32f446xe_flash.ld)
+set(STARTUP_ASM   ${CMAKE_SOURCE_DIR}/startup/startup_stm32f446xx.S)
 
 # ---------------------------------------------------------------------------
 # HAL library — grows as you add peripherals
 # ---------------------------------------------------------------------------
 add_library(stm32_hal STATIC
-    src/gpio_driver.c
-    src/rcc_driver.c
+    drivers/src/gpio_driver.c
+    drivers/src/rcc_driver.c
 )
-target_include_directories(stm32_hal PUBLIC include)
+target_include_directories(stm32_hal PUBLIC drivers/inc)
 
 # ---------------------------------------------------------------------------
 # blink example
