@@ -6,8 +6,8 @@
  * @date 2024-06-05
  */
 
-#include "../../drivers/inc/gpio_driver.h"
-#include "../../drivers/inc/rcc_driver.h"
+#include "gpio_driver.h"
+#include "rcc_driver.h"
 
 int main(void){
 
