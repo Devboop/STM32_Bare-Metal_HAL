@@ -137,7 +137,11 @@ typedef enum {
  */
 void rcc_ahb1_clock_enable(ahb1_clock_port_t port, rcc_status_t clock_status);
 
-
+/**
+ * @brief APB1 GPIO Clock Enable Function
+ * @param port APB1 clock port
+ * @param clock_status Clock status
+ */
 void rcc_apb1_clock_enable(apb1_clock_port_t port, rcc_status_t clock_status);
 
 #endif /* RCC_DRIVER_H */
