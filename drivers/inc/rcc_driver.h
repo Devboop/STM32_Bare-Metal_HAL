@@ -97,6 +97,38 @@ typedef enum {
     RCC_AHB1_OTGHSULPI = 30UL  
 } ahb1_clock_port_t;
 
+/**
+ * @brief APB1 clock port enumeration
+ */
+typedef enum {
+    RCC_APB1_TIM2 = 0UL,
+    RCC_APB1_TIM3 = 1UL,
+    RCC_APB1_TIM4 = 2UL,
+    RCC_APB1_TIM5 = 3UL,
+    RCC_APB1_TIM6 = 4UL,
+    RCC_APB1_TIM7 = 5UL,
+    RCC_APB1_TIM12 = 6UL,
+    RCC_APB1_TIM13 = 7UL,
+    RCC_APB1_TIM14 = 8UL,
+    RCC_APB1_WWDG = 11UL,
+    RCC_APB1_SPI2 = 14UL,
+    RCC_APB1_SPI3 = 15UL,
+    RCC_APB1_SPDIFRX = 16UL,
+    RCC_APB1_USART2 = 17UL,
+    RCC_APB1_USART3 = 18UL,
+    RCC_APB1_UART4 = 19UL,
+    RCC_APB1_UART5 = 20UL,
+    RCC_APB1_I2C1 = 21UL,
+    RCC_APB1_I2C2 = 22UL,
+    RCC_APB1_I2C3 = 23UL,
+    RCC_APB1_FMPI2C1 = 24UL,
+    RCC_APB1_CAN1 = 25UL,
+    RCC_APB1_CAN2 = 26UL,
+    RCC_APB1_CEC = 27UL,
+    RCC_APB1_PWR = 28UL,
+    RCC_APB1_DAC = 29UL,       
+
+} apb1_clock_port_t;
 
 /**
  * @brief AHB1 GPIO Clock Enable Function
@@ -104,5 +136,12 @@ typedef enum {
  * @param clock_status Clock status
  */
 void rcc_ahb1_clock_enable(ahb1_clock_port_t port, rcc_status_t clock_status);
+
+/**
+ * @brief APB1 GPIO Clock Enable Function
+ * @param port APB1 clock port
+ * @param clock_status Clock status
+ */
+void rcc_apb1_clock_enable(apb1_clock_port_t port, rcc_status_t clock_status);
 
 #endif /* RCC_DRIVER_H */
